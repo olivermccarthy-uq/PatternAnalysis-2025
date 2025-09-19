@@ -44,7 +44,13 @@ optimizer = optim.Adam(model.parameters(), lr=1e-3)
 # -----------------------------
 # Training Parameters
 # -----------------------------
-epochs = 25
+epochs = 15
+
+# -----------------------------
+# Initialize lists to store losses
+# -----------------------------
+train_losses = []
+val_losses = []
 
 # -----------------------------
 # Training Loop
@@ -63,6 +69,7 @@ for epoch in range(1, epochs+1):
         train_loss += loss.item()
     
     avg_train_loss = train_loss / len(train_loader.dataset)
+    train_losses.append(avg_train_loss)
 
     # -----------------------------
     # Validation Loop
@@ -76,8 +83,21 @@ for epoch in range(1, epochs+1):
             loss = vae_loss(recon, batch, mu, logvar)
             val_loss += loss.item()
     avg_val_loss = val_loss / len(val_loader.dataset)
+    val_losses.append(avg_val_loss)
 
     print(f"Epoch {epoch}/{epochs} | Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.4f}")
+
+# -----------------------------
+# Plot Epoch vs Loss
+# -----------------------------
+plt.figure(figsize=(8,5))
+plt.plot(range(1, epochs+1), train_losses, label='Train Loss')
+plt.plot(range(1, epochs+1), val_losses, label='Validation Loss')
+plt.xlabel("Epoch")
+plt.ylabel("Loss")
+plt.title("VAE Training and Validation Loss per Epoch")
+plt.legend()
+plt.show()
 
 # -----------------------------
 # Save Model
