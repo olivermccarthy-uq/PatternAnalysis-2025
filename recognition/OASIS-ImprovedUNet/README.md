@@ -123,6 +123,11 @@ The convergence and parallel decline of both losses toward the end suggest succe
 
 Monitoring both curves ensures the model is not simply memorising the training set, but rather learning generalisable features essential for robust MRI segmentation.
 
+#### Dice Similarity Coefficient
+
+The Dice coefficient for segmentation predictions on the test set was **0.6323**, which does not meet the assignment threshold (≥ 0.9). This score reflects that, while the model segments the main brain regions effectively, it struggles with accurately capturing fine anatomical details and boundaries, as seen in both the visual results and the quantitative metric.
+
+
 ### Sample Prediction 1
 ![Prediction 0](prediction_0.png)
 
@@ -162,6 +167,16 @@ Each example displays the input brain MRI slice, its ground truth segmentation m
 
 - Overall:
     - The model provides a robust segmentation baseline, with room for improvement through enhanced data augmentation, post-processing, or advanced architectures
+
+#### Limitations and Troubleshooting
+
+Despite retraining the model for 35 epochs (instead of 15), monitoring the validation loss, and experimenting with hyperparameters, the Dice similarity coefficient remained below the required value. Potential causes include:
+- Insufficient data augmentation or model regulariaation
+- Suboptimal thresholding for mask binariaation
+- The model’s ability to generalize to fine structures and small regions within the brain masks
+
+Further improvements could include more extensive data preprocessing, different model architectures, and advanced training techniques. Given time constraints, these enhancements were not implemented, but would be the logical next steps for improving segmentation quality.
+
 
 
 

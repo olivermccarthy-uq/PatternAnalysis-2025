@@ -4,6 +4,14 @@ from modules import ImprovedUNet
 from dataset import load_oasis_data
 from torch.utils.data import DataLoader, TensorDataset
 
+def dice_coefficient(pred, target, epsilon=1e-6):
+    pred = pred.int()
+    target = target.int()
+    intersection = (pred & target).sum(dim=(1,2,3))
+    union = pred.sum(dim=(1,2,3)) + target.sum(dim=(1,2,3))
+    dice = (2 * intersection + epsilon) / (union + epsilon)
+    return dice.mean().item()
+
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 model = ImprovedUNet(n_channels=1, n_classes=1).to(device)
 model.load_state_dict(torch.load('unet_epoch15.pth', map_location=device))
@@ -29,6 +37,10 @@ with torch.no_grad():
         preds.append(out.cpu())
 preds = torch.cat(preds, dim=0)
 
+# Compute Dice coefficient
+dice = dice_coefficient(preds, labels_tensor)
+print(f"Dice coefficient on test set: {dice:.4f}")
+
 # Visualize 3 sample predictions
 for i in range(3):
     fig, axs = plt.subplots(1, 3, figsize=(12, 4))
@@ -40,4 +52,3 @@ for i in range(3):
     axs[2].set_title('Prediction')
     plt.savefig(f'prediction_{i}.png')
     plt.close(fig)
-
