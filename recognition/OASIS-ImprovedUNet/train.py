@@ -9,7 +9,7 @@ from dataset import load_oasis_data
 # CONFIG
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 BATCH_SIZE = 8
-EPOCHS = 15
+EPOCHS = 35
 LR = 1e-3
 
 # Data loading: update paths as needed
