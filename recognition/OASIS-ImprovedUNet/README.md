@@ -17,13 +17,13 @@ The task is to segment anatomical regions from 2D brain MRI slices. Images are s
 
 ## Project Structure
 
-recognition/OASIS-ImprovedUNet/
-│
-├── dataset.py # Loads and preprocesses OASIS MRI & label data
-├── modules.py # Improved UNet model architecture (PyTorch)
-├── train.py # Model training and validation loop
-├── predict.py # Example inference script + result visualisations
-└── README.md # Documentation and usage instructions
+recognition/
+└── OASIS-ImprovedUNet/
+    ├── dataset.py        # Loads and preprocesses OASIS MRI & label data
+    ├── modules.py        # Improved UNet model architecture (PyTorch)
+    ├── train.py          # Model training and validation loop
+    ├── predict.py        # Example inference script + result visualisations
+    └── README.md         # Documentation and usage instructions
 
 ---
 
@@ -124,7 +124,7 @@ The convergence and parallel decline of both losses toward the end suggest succe
 Monitoring both curves ensures the model is not simply memorising the training set, but rather learning generalisable features essential for robust MRI segmentation.
 
 ### Sample Prediction 1
-![Prediction 0](prediction_1.png)
+![Prediction 0](prediction_0.png)
 
 In Prediction 1, the input MRI slice (left) is clearly segmented with distinct anatomical structures in the ground truth mask (centre). The predicted mask (right) successfully outlines major brain regions and excludes most of the non-brain background. The segmentation captures general tissue contours and shows good agreement with the shape and location of structures in the ground truth.
 
@@ -133,7 +133,7 @@ However, there are noticeable artifacts, such as ring-like patterns near the out
 Overall, the model provides a reasonable binary segmentation for core brain regions but could be improved to reduce edge artifacts and sharpen internal anatomical boundaries. Incorporating additional metrics or data augmentation may help in addressing these issues in future iterations.
 
 ### Sample Prediction 2
-![Prediction 1](prediction_2.png)
+![Prediction 1](prediction_1.png)
 
 This figure again illustrates the input MRI, the ground truth, and the model’s predicted segmentation. The prediction displays strong overall agreement in identifying the brain region, with the major lobes and boundaries reasonably well matched to the ground truth.
 
@@ -142,7 +142,7 @@ However, closer inspection reveals several limitations: the model misses some of
 Interpreting these results, the model clearly generalises the broad brain shape but could benefit from additional regularisation, improved post-processing, or refined loss functions to increase the precision of boundary and internal structure segmentation.
 
 ### Sample Prediction 3
-![Prediction 2](prediction_3.png)
+![Prediction 2](prediction_2.png)
 
 This prediction shows strong alignment between the predicted mask and the main brain tissue in the ground truth, with the overall shape and location of the brain accurately delineated. The segmentation correctly excludes most of the background and captures the gross anatomical structure.
 
